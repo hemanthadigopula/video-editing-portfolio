@@ -196,17 +196,46 @@ if (contactForm) {
     const email = formData.get('email');
     const message = formData.get('message');
     
-    // Create mailto link
-    const mailtoLink = `mailto:hemanthadigopula.prof@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    alert('Opening your email client to send the message...');
-    
-    // Reset form
-    contactForm.reset();
+        // Create button element to show status
+        const button = e.target.querySelector('button[type="submit"]');
+        const originalButtonText = button.textContent;
+        
+        // Show loading state
+        button.textContent = 'Sending...';
+        button.disabled = true;
+        
+        // Send form data using fetch API
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                access_key: 'YOUR_WEB3FORMS_ACCESS_KEY', // You need to get this from https://web3forms.com
+                name: name,
+                email: email,
+                message: message,
+                subject: `Portfolio Contact from ${name}`
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Message sent successfully! I will get back to you soon.');
+                contactForm.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('❌ Sorry, there was an error sending your message. Please try again or email me directly at hemanthadigopula.prof@gmail.com');
+        })
+        .finally(() => {
+            button.textContent = originalButtonText;
+            button.disabled = false;
+        });    
   });
 }
 console.log('Created by Hemanth Adigopula');
