@@ -31,6 +31,9 @@ body {
 
 /* ===== HEADER & NAVIGATION ===== */
 header {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   width: 100%;
@@ -52,8 +55,8 @@ header h1 {
 }
 
 nav {
-  float: right;
-  margin-top: -2.5rem;
+  /*   float: right; */
+  /*   margin-top: -2.5rem; */
 }
 
 nav a {
@@ -301,9 +304,14 @@ footer {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
+    header {
+    flex-direction: column;
+    padding: 1rem 5%;
+  }
+
   nav {
-    float: none;
-    margin-top: 1rem;
+    /*     float: none; */
+    /*     margin-top: 1rem; */
     text-align: center;
   }
   
