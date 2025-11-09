@@ -183,4 +183,30 @@ animateCircles();
 */
 
 console.log('Portfolio website loaded successfully! 🎬');
+
+// ----- CONTACT FORM SUBMISSION -----
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(contactForm);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+    
+    // Create mailto link
+    const mailtoLink = `mailto:hemanthadigopula.prof@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    alert('Opening your email client to send the message...');
+    
+    // Reset form
+    contactForm.reset();
+  });
+}
 console.log('Created by Hemanth Adigopula');
